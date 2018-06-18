@@ -20,11 +20,9 @@ function Leaf(){
   this.hit = function(player) {
 
     if (player.jumping){
-      console.log("Jumping")
       return false;
     }
     if (player.y>this.y && player.y<this.y+this.h && player.x > this.left && player.x < this.size+this.left) {
-      console.log("hit")
       return true;
     }
   }

@@ -3,7 +3,7 @@ var player;
 var leafs = [];
 var r,g,b;
 var score = 0;
-var playername = "Simon";
+var playername;
 var bestscore = 0;
 var count = 0;
 var finished = false;
@@ -30,7 +30,7 @@ function setup() {
   input.style('border', 'none');
   input.style('background-color', '#FDD83D');
   input.style('color', 'white');
-  input.position(110,350);
+  input.position(this.width/2-150,350);
 
   player = new Player();
   leafs.push(new Leaf());
@@ -84,8 +84,10 @@ this.startscreen = function () {
   background(r,g,b);
   fill(255,215,0);
   textSize(40)
-  text("Press enter to start",100,250);
-  text("Username for ranking:",80,330);
+  var string = "Press enter to start";
+  text(string,this.width/2-textWidth(string)/2,250);
+  string = "Username for ranking";
+  text(string,this.width/2-(textWidth(string)/2),330);
 }
 
 this.back = function() {
@@ -111,7 +113,7 @@ this.back = function() {
     fill(255,255,255);
     textSize(60);
     text(score,width/2-30,60);
-    if(frameCount % 50 == 0){
+    if(frameCount % 50 == 0 && firstshelft){
       score++;
     }
   }
@@ -124,14 +126,24 @@ this.dead = function() {
 this.checkcolor = function() {
   if (r>250 && g>250 && b>250){
     fill(255,215,0);
-    text("YOU MADE IT!",300-190,200);
+    string = "YOU MADE IT!";
+    text(string,this.width/2-(textWidth(string)/2),200);
     textSize(40)
-    text("YOUR BEST SCORE: "+bestscore,300-210,260);
-
-    text("HIGHSCORE",160,350);
+    string = "YOUR BEST SCORE"+bestscore;
+    text(string,this.width/2-(textWidth(string)/2),260);
+    string = "HIGHSCORE";
+    text(string,this.width/2-(textWidth(string)/2),350);
     for(var i=0; i< highscore.length; i++ ){
-      text(highscore[i].name,150,400+(50*i));
-      text(highscore[i].score,370,400+(50*i));
+      var name, score;
+      if(bestscore<highscore[i].score){
+        name = highscore[i].name;
+        score = highscore[i].score;
+      }else{
+        name = playername;
+        score = bestscore;
+      }
+      text(name,150,400+(50*i));
+      text(score,370,400+(50*i));
     }
     if(uploadScore){
       updateHighscore();
